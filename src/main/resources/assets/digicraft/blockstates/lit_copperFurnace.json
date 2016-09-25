@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "facing=north": { "model": "digicraft:lit_copperFurnace" },
+        "facing=south": { "model": "digicraft:lit_copperFurnace", "y": 180 },
+        "facing=west":  { "model": "digicraft:lit_copperFurnace", "y": 270 },
+        "facing=east":  { "model": "digicraft:lit_copperFurnace", "y": 90 }
+    }
+}

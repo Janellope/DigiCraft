@@ -1,0 +1,37 @@
+# Ingots
+item.ingotCopper.name=Copper Ingot
+
+# Blocks
+tile.blockCopper.name=Copper Block
+
+# Tile Entities
+tile.copperFurnace.name=Copper Furnace
+tile.bronzeFurnace.name=Bronze Furnace
+tile.ironFurnace.name=Iron Furnace
+tile.steelFurnace.name=Steel Furnace
+tile.goldFurnace.name=Gold Furnace
+tile.diamondFurnace.name=Diamond Furnace
+tile.obsidianFurnace.name=Obsidian Furnace
+
+# Tools
+item.copperAxe.name=Copper Axe
+item.copperHoe.name=Copper Hoe
+item.copperPickaxe.name=Copper Pickaxe
+item.copperShovel.name=Copper Shovel
+item.copperSword.name=Copper Sword
+
+# Armor
+item.copperHelmet.name=Copper Helmet
+item.copperChestplate.name=Copper Chestplate
+item.copperLeggings.name=Copper Leggings
+item.copperBoots.name=Copper Boots
+
+# Crops
+item.corn.name=Corn
+item.cornSeed.name=Corn Seed
+
+# Ore
+tile.oreCopper.name=Copper Ore
+
+# Blocks
+tile.pedestal.name=Pedestal
