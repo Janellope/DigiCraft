@@ -1,9 +1,6 @@
 package janellope.digicraft.proxy;
 
-import janellope.digicraft.Main;
-import janellope.digicraft.network.ModGuiHandler;
 import net.minecraft.item.Item;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 public class CommonProxy {
 
@@ -12,11 +9,11 @@ public class CommonProxy {
 		
 	}
 	
-	public void registerGUIHandler() 
-	{
+	//public void registerGUIHandler() 
+	//{
 		
-		NetworkRegistry.INSTANCE.registerGuiHandler(Main.instance, new ModGuiHandler());
+	//	NetworkRegistry.INSTANCE.registerGuiHandler(Main.instance, new ModGuiHandler());
 		
-	}
+	//}
 
 }

@@ -30,7 +30,7 @@ public class TEPedestal extends TileEntity implements IInventory {
 
     @Override
     public NBTTagCompound getUpdateTag() {
-        // getUpdateTag() is called whenever the chunkdata is sent to the
+        // getUpdateTag() is called whenever the chunk data is sent to the
         // client. In contrast getUpdatePacket() is called when the tile entity
         // itself wants to sync to the client. In many cases you want to send
         // over the same information in getUpdateTag() as in getUpdatePacket().
@@ -39,7 +39,7 @@ public class TEPedestal extends TileEntity implements IInventory {
 
     @Override
     public SPacketUpdateTileEntity getUpdatePacket() {
-        // Prepare a packet for syncing our TE to the client. Since we only have to sync the stack
+        // Prepare a packet for sync to our TE to the client. Since we only have to sync the stack
         // and that's all we have we just write our entire NBT here. If you have a complex
         // tile entity that doesn't need to have all information on the client you can write
         // a more optimal NBT here.

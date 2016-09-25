@@ -7,7 +7,8 @@ import janellope.digicraft.item.ModItems;
 
 public class BlockCropCorn extends BlockCrops {
 
-	public BlockCropCorn() {
+	public BlockCropCorn() 
+	{
 		setUnlocalizedName("cropCorn");
 		setRegistryName("cropCorn");
 		setCreativeTab(Main.creativeTab);
