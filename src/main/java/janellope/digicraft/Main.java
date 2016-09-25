@@ -2,16 +2,19 @@ package janellope.digicraft;
 
 import janellope.digicraft.block.ModBlocks;
 import janellope.digicraft.client.DigitechTab;
+import janellope.digicraft.client.render.blocks.PedestalTESR;
 import janellope.digicraft.item.ModItems;
 import janellope.digicraft.item.equipment.ItemArmor;
 import janellope.digicraft.network.ModGuiHandler;
 import janellope.digicraft.proxy.CommonProxy;
 import janellope.digicraft.recipe.ModRecipes;
 import janellope.digicraft.tileentity.ModTileEntities;
+import janellope.digicraft.tileentity.miscblocks.TEPedestal;
 import janellope.digicraft.worldgen.ModWorldGen;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.util.EnumHelper;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -55,6 +58,8 @@ public class Main {
     	ModRecipes.init();
     	ModWorldGen.init();
     	ModTileEntities.init();
+		ClientRegistry.bindTileEntitySpecialRenderer(TEPedestal.class, new PedestalTESR());
+
     }
 
     @EventHandler

@@ -90,7 +90,7 @@ public class BlockPedestal extends Block implements ITileEntityProvider, ItemMod
 	                // players inventory if there is room
 	                ItemStack stack = te.getStackInSlot(0);
 	                te.setInventorySlotContents(0,null);
-	                if (!player.inventory.addItemStackToInventory(stack)) {
+	                if (!player.inventory.addItemStackToInventory(stack) ) {
 	                    // Not possible. Throw item in the world
 	                    EntityItem entityItem = new EntityItem(world, pos.getX(), pos.getY()+1, pos.getZ(), stack);
 	                    world.spawnEntityInWorld(entityItem);

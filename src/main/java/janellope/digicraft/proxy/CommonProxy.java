@@ -8,12 +8,5 @@ public class CommonProxy {
 	{
 		
 	}
-	
-	//public void registerGUIHandler() 
-	//{
-		
-	//	NetworkRegistry.INSTANCE.registerGuiHandler(Main.instance, new ModGuiHandler());
-		
-	//}
 
 }
