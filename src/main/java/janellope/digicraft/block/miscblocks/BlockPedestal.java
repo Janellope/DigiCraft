@@ -9,8 +9,10 @@ import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -73,11 +75,11 @@ public class BlockPedestal extends Block implements ITileEntityProvider, ItemMod
             if (player.isSneaking() == false)
 			{
 				
-				if (te.getStack() == null) {
+				if (te.getStackInSlot(0) == null) {
 	                if (player.getHeldItem(hand) != null) {
 	                    // There is no item in the pedestal and the player is holding an item. We move that item
 	                    // to the pedestal
-	                    te.setStack(player.getHeldItem(hand));
+	                    te.setInventorySlotContents(0,player.getHeldItem(hand));
 	                    player.inventory.setInventorySlotContents(player.inventory.currentItem, null);
 	                    // Make sure the client knows about the changes in the player inventory
 	                    player.openContainer.detectAndSendChanges();
@@ -86,8 +88,8 @@ public class BlockPedestal extends Block implements ITileEntityProvider, ItemMod
 	            	{
 	                // There is a stack in the pedestal. In this case we remove it and try to put it in the
 	                // players inventory if there is room
-	                ItemStack stack = te.getStack();
-	                te.setStack(null);
+	                ItemStack stack = te.getStackInSlot(0);
+	                te.setInventorySlotContents(0,null);
 	                if (!player.inventory.addItemStackToInventory(stack)) {
 	                    // Not possible. Throw item in the world
 	                    EntityItem entityItem = new EntityItem(world, pos.getX(), pos.getY()+1, pos.getZ(), stack);
@@ -116,4 +118,19 @@ public class BlockPedestal extends Block implements ITileEntityProvider, ItemMod
         return true;
     }
 	
+    @Override
+    public void breakBlock(World world, BlockPos pos, IBlockState blockstate) {
+        TEPedestal te = (TEPedestal) world.getTileEntity(pos);
+        InventoryHelper.dropInventoryItems(world, pos, te);
+        super.breakBlock(world, pos, blockstate);
+    }
+
+
+    @Override
+    public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
+        if (stack.hasDisplayName()) {
+            ((TEPedestal) worldIn.getTileEntity(pos)).setCustomName(stack.getDisplayName());
+        }
+    }
+    
 }

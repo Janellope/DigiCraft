@@ -20,12 +20,8 @@ public class ContainerTEPedestal extends Container {
     public ContainerTEPedestal(IInventory playerInv, TEPedestal te) {
     	this.te = te;
 
-    	// Tile Entity, Slot 0-8, Slot IDs 0-8
-    	for (int y = 0; y < 3; ++y) {
-    		for (int x = 0; x < 3; ++x) {
-    			this.addSlotToContainer(new Slot(te, x + y * 3, 62 + x * 18, 17 + y * 18));
-    		}
-    	}
+    	// Tile Entity, Slot 0, Slot ID 0
+    	this.addSlotToContainer(new Slot(te, 0, 80, 32));
 
     	// Player Inventory, Slot 9-35, Slot IDs 9-35
     	for (int y = 0; y < 3; ++y) {
@@ -49,11 +45,14 @@ public class ContainerTEPedestal extends Container {
             ItemStack current = slot.getStack();
             previous = current.copy();
 
-            if (fromSlot < 9) {
+            if (fromSlot < 1) 
+            {
                 // From TE Inventory to Player Inventory
                 if (!this.mergeItemStack(current, 9, 45, true))
                     return null;
-            } else {
+            } 
+            else 
+            {
                 // From Player Inventory to TE Inventory
                 if (!this.mergeItemStack(current, 0, 9, false))
                     return null;

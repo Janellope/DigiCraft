@@ -28,7 +28,7 @@ public class PedestalTESR extends TileEntitySpecialRenderer<TEPedestal> {
     }
 
     private void renderItem(TEPedestal te) {
-        ItemStack stack = te.getStack();
+        ItemStack stack = te.getStackInSlot(0);
         if (stack != null) {
             RenderHelper.enableStandardItemLighting();
             GlStateManager.enableLighting();
