@@ -29,17 +29,18 @@ import net.minecraft.util.datafix.DataFixer;
 import net.minecraft.util.datafix.FixTypes;
 import net.minecraft.util.datafix.walkers.ItemStackDataLists;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TEFurnaceCopperAlloy extends TileEntityLockable implements ITickable, ISidedInventory
 {
 
-	private static final int[] SLOTS_TOP = new int[] {0};
-    private static final int[] SLOTS_BOTTOM = new int[] {2, 1};
-    private static final int[] SLOTS_SIDES = new int[] {1};
+	private static final int[] SLOTS_TOP = new int[] {0, 1};
+    private static final int[] SLOTS_BOTTOM = new int[] {3};
+    private static final int[] SLOTS_SIDES = new int[] {2};
     /** The ItemStacks that hold the items currently being used in the furnace */
-    private ItemStack[] furnaceItemStacks = new ItemStack[3];
+    private ItemStack[] furnaceItemStacks = new ItemStack[4];
     /** The number of ticks that the furnace will keep burning */
     private int furnaceBurnTime;
     /** The number of ticks that a fresh copy of the currently-burning item would keep the furnace burning for */
@@ -86,8 +87,9 @@ public class TEFurnaceCopperAlloy extends TileEntityLockable implements ITickabl
     /**
      * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
      */
-    public void setInventorySlotContents(int index, /*@Nullable*/ ItemStack stack)
+    public void setInventorySlotContents(int index, ItemStack stack)
     {
+    	
         boolean flag = stack != null && stack.isItemEqual(this.furnaceItemStacks[index]) && ItemStack.areItemStackTagsEqual(stack, this.furnaceItemStacks[index]);
         this.furnaceItemStacks[index] = stack;
 
@@ -130,6 +132,7 @@ public class TEFurnaceCopperAlloy extends TileEntityLockable implements ITickabl
         p_189676_0_.registerWalker(FixTypes.BLOCK_ENTITY, new ItemStackDataLists("Furnace", new String[] {"Items"}));
     }
 
+    @Override
     public void readFromNBT(NBTTagCompound compound)
     {
         super.readFromNBT(compound);
@@ -158,6 +161,7 @@ public class TEFurnaceCopperAlloy extends TileEntityLockable implements ITickabl
         }
     }
 
+    @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound)
     {
         super.writeToNBT(compound);
@@ -286,7 +290,7 @@ public class TEFurnaceCopperAlloy extends TileEntityLockable implements ITickabl
      * Time to cook, lower = faster, default 200
      */
     
-    public int getCookTime(/*@Nullable*/ ItemStack stack)
+    public int getCookTime(ItemStack stack)
     {
         return 155;
     }
@@ -434,10 +438,7 @@ public class TEFurnaceCopperAlloy extends TileEntityLockable implements ITickabl
         }
     }
 
-    public int[] getSlotsForFace(EnumFacing side)
-    {
-        return side == EnumFacing.DOWN ? SLOTS_BOTTOM : (side == EnumFacing.UP ? SLOTS_TOP : SLOTS_SIDES);
-    }
+    
 
     /**
      * Returns true if automation can insert the given item in the given slot from the given side.
@@ -452,7 +453,7 @@ public class TEFurnaceCopperAlloy extends TileEntityLockable implements ITickabl
      */
     public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction)
     {
-        if (direction == EnumFacing.DOWN && index == 1)
+        if (direction == EnumFacing.DOWN && index == 3)
         {
             Item item = stack.getItem();
 
@@ -523,6 +524,23 @@ public class TEFurnaceCopperAlloy extends TileEntityLockable implements ITickabl
         }
     }
 
+  	@Override
+	public ITextComponent getDisplayName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void markDirty() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int[] getSlotsForFace(EnumFacing side)
+    {
+        return side == EnumFacing.DOWN ? SLOTS_BOTTOM : (side == EnumFacing.UP ? SLOTS_TOP : SLOTS_SIDES);
+    }
     net.minecraftforge.items.IItemHandler handlerTop = new net.minecraftforge.items.wrapper.SidedInvWrapper(this, net.minecraft.util.EnumFacing.UP);
     net.minecraftforge.items.IItemHandler handlerBottom = new net.minecraftforge.items.wrapper.SidedInvWrapper(this, net.minecraft.util.EnumFacing.DOWN);
     net.minecraftforge.items.IItemHandler handlerSide = new net.minecraftforge.items.wrapper.SidedInvWrapper(this, net.minecraft.util.EnumFacing.WEST);
@@ -540,6 +558,5 @@ public class TEFurnaceCopperAlloy extends TileEntityLockable implements ITickabl
                 return (T) handlerSide;
         return super.getCapability(capability, facing);
     }
-
 
 }

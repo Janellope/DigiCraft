@@ -146,7 +146,8 @@ public class TEPedestal extends TileEntity implements IInventory {
     }
     
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
+    public NBTTagCompound writeToNBT(NBTTagCompound nbt) 
+    {
         super.writeToNBT(nbt);
 
         NBTTagList list = new NBTTagList();

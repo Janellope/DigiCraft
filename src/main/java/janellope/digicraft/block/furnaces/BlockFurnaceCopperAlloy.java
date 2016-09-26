@@ -5,9 +5,11 @@ import java.util.Random;
 import janellope.digicraft.Main;
 import janellope.digicraft.block.ModBlocks;
 import janellope.digicraft.item.ItemModelProvider;
-import janellope.digicraft.tileentity.furnace.TEFurnaceCopper;
+import janellope.digicraft.network.ModGuiHandler;
+import janellope.digicraft.tileentity.furnace.TEFurnaceCopperAlloy;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockHorizontal;
+import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
@@ -20,7 +22,6 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.stats.StatList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
@@ -34,7 +35,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockFurnaceCopperAlloy extends BlockContainer implements ItemModelProvider
+public class BlockFurnaceCopperAlloy extends BlockContainer implements ITileEntityProvider,ItemModelProvider
 {
 	
 	public static final PropertyDirection FACING = BlockHorizontal.FACING;
@@ -58,13 +59,13 @@ public class BlockFurnaceCopperAlloy extends BlockContainer implements ItemModel
 	
 	public void registerItemModel(Item block) 
 	{
-		Main.proxy.registerItemRenderer(block, 0, "copperFurnace");
+		Main.proxy.registerItemRenderer(block, 0, "furnaceCopperAlloy");
 	}
 	
 	//@Nullable
     public Item getItemDropped(IBlockState state, Random rand, int fortune)
     {
-        return Item.getItemFromBlock(ModBlocks.copperFurnace);
+        return Item.getItemFromBlock(ModBlocks.furnaceCopperAlloy);
     }
 
     public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state)
@@ -142,41 +143,40 @@ public class BlockFurnaceCopperAlloy extends BlockContainer implements ItemModel
         }
     }
 
-    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, /*@Nullable*/ ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ)
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, /*@Nullable*/ ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ)
     {
-        if (worldIn.isRemote)
+        if (world.isRemote)
         {
             return true;
         }
         else
         {
-            TileEntity tileentity = worldIn.getTileEntity(pos);
+            TileEntity tileentity = world.getTileEntity(pos);
 
-            if (tileentity instanceof TEFurnaceCopper)
+            if (tileentity instanceof TEFurnaceCopperAlloy)
             {
-                playerIn.displayGUIChest((TEFurnaceCopper)tileentity);
-                playerIn.addStat(StatList.FURNACE_INTERACTION);
+            	player.openGui(Main.instance, ModGuiHandler.FurnaceCopperAlloyGUI, world, pos.getX(), pos.getY(), pos.getZ());
             }
 
             return true;
         }
     }
 
-    public static void setState(boolean active, World worldIn, BlockPos pos)
+    public static void setState(boolean active, World world, BlockPos pos)
     {
-        IBlockState iblockstate = worldIn.getBlockState(pos);
-        TileEntity tileentity = worldIn.getTileEntity(pos);
+        IBlockState iblockstate = world.getBlockState(pos);
+        TileEntity tileentity = world.getTileEntity(pos);
         keepInventory = true;
 
         if (active)
         {
-            worldIn.setBlockState(pos, ModBlocks.lit_copperFurnace.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
-            worldIn.setBlockState(pos, ModBlocks.lit_copperFurnace.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
+            world.setBlockState(pos, ModBlocks.lit_furnaceCopperAlloy.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
+            world.setBlockState(pos, ModBlocks.lit_furnaceCopperAlloy.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
         }
         else
         {
-            worldIn.setBlockState(pos, ModBlocks.copperFurnace.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
-            worldIn.setBlockState(pos, ModBlocks.copperFurnace.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
+            world.setBlockState(pos, ModBlocks.furnaceCopperAlloy.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
+            world.setBlockState(pos, ModBlocks.furnaceCopperAlloy.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
         }
 
         keepInventory = false;
@@ -184,7 +184,7 @@ public class BlockFurnaceCopperAlloy extends BlockContainer implements ItemModel
         if (tileentity != null)
         {
             tileentity.validate();
-            worldIn.setTileEntity(pos, tileentity);
+            world.setTileEntity(pos, tileentity);
         }
     }
 
@@ -193,7 +193,7 @@ public class BlockFurnaceCopperAlloy extends BlockContainer implements ItemModel
      */
     public TileEntity createNewTileEntity(World worldIn, int meta)
     {
-        return new TEFurnaceCopper();
+        return new TEFurnaceCopperAlloy();
     }
 
     /**
@@ -216,9 +216,9 @@ public class BlockFurnaceCopperAlloy extends BlockContainer implements ItemModel
         {
             TileEntity tileentity = worldIn.getTileEntity(pos);
 
-            if (tileentity instanceof TEFurnaceCopper)
+            if (tileentity instanceof TEFurnaceCopperAlloy)
             {
-                ((TEFurnaceCopper)tileentity).setCustomInventoryName(stack.getDisplayName());
+                ((TEFurnaceCopperAlloy)tileentity).setCustomInventoryName(stack.getDisplayName());
             }
         }
     }
@@ -229,9 +229,9 @@ public class BlockFurnaceCopperAlloy extends BlockContainer implements ItemModel
         {
             TileEntity tileentity = worldIn.getTileEntity(pos);
 
-            if (tileentity instanceof TEFurnaceCopper)
+            if (tileentity instanceof TEFurnaceCopperAlloy)
             {
-                InventoryHelper.dropInventoryItems(worldIn, pos, (TEFurnaceCopper)tileentity);
+                InventoryHelper.dropInventoryItems(worldIn, pos, (TEFurnaceCopperAlloy)tileentity);
                 worldIn.updateComparatorOutputLevel(pos, this);
             }
         }
@@ -251,7 +251,7 @@ public class BlockFurnaceCopperAlloy extends BlockContainer implements ItemModel
 
     public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state)
     {
-        return new ItemStack(ModBlocks.copperFurnace);
+        return new ItemStack(ModBlocks.furnaceCopperAlloy);
     }
 
     /**

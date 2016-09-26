@@ -3,6 +3,7 @@ package janellope.digicraft.block;
 import janellope.digicraft.block.crops.BlockCropCorn;
 import janellope.digicraft.block.furnaces.BlockFurnaceBronze;
 import janellope.digicraft.block.furnaces.BlockFurnaceCopper;
+import janellope.digicraft.block.furnaces.BlockFurnaceCopperAlloy;
 import janellope.digicraft.block.furnaces.BlockFurnaceDiamond;
 import janellope.digicraft.block.furnaces.BlockFurnaceGold;
 import janellope.digicraft.block.furnaces.BlockFurnaceIron;
@@ -39,6 +40,11 @@ public class ModBlocks {
 	public static Block obsidianFurnace;
 	public static Block lit_obsidianFurnace;
 	
+	//Alloy Furnaces
+	public static Block furnaceCopperAlloy;
+	public static Block lit_furnaceCopperAlloy;
+	
+	
 	
 	//Crops
 	public static BlockCropCorn cropCorn;
@@ -67,6 +73,9 @@ public class ModBlocks {
 		lit_diamondFurnace = register(new BlockFurnaceDiamond(true,"lit_diamondFurnace"));
 		obsidianFurnace = register(new BlockFurnaceObsidian(false,"obsidianFurnace"));
 		lit_obsidianFurnace = register(new BlockFurnaceObsidian(true,"lit_obsidianFurnace"));
+		
+		furnaceCopperAlloy = register(new BlockFurnaceCopperAlloy(false,"furnaceCopperAlloy"));
+		lit_furnaceCopperAlloy = register(new BlockFurnaceCopperAlloy(true,"lit_furnaceCopperAlloy"));
 		
 		
 		cropCorn = register(new BlockCropCorn(), null);

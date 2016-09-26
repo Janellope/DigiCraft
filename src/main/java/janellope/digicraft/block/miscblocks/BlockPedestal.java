@@ -39,6 +39,7 @@ public class BlockPedestal extends Block implements ITileEntityProvider, ItemMod
     public void registerItemModel(Item block) 
 	{
 		Main.proxy.registerItemRenderer(block, 0, "pedestalblock");
+
 		ClientRegistry.bindTileEntitySpecialRenderer(TEPedestal.class, new PedestalTESR());
 	}
     
@@ -68,9 +69,10 @@ public class BlockPedestal extends Block implements ITileEntityProvider, ItemMod
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player,
-                    EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
-        if (!world.isRemote) {
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) 
+    {
+        if (!world.isRemote) 
+        {
             TEPedestal te = getTE(world, pos);
             if (player.isSneaking() == false)
 			{
@@ -98,15 +100,12 @@ public class BlockPedestal extends Block implements ITileEntityProvider, ItemMod
 	                    player.openContainer.detectAndSendChanges();
 	                }
 	            }
+				return true;
             	
             } 
             else
             {
-            	
-            	if (!world.isRemote) 
-            	{
                     player.openGui(Main.instance, ModGuiHandler.TEPedestalGUI, world, pos.getX(), pos.getY(), pos.getZ());
-                }
                 return true;
             	
             }
