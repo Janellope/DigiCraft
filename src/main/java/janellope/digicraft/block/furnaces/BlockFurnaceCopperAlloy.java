@@ -6,7 +6,7 @@ import janellope.digicraft.Main;
 import janellope.digicraft.block.ModBlocks;
 import janellope.digicraft.item.ItemModelProvider;
 import janellope.digicraft.network.ModGuiHandler;
-import janellope.digicraft.tileentity.furnace.TEFurnaceCopperAlloy;
+import janellope.digicraft.tileentity.furnace.alloy.TEFurnaceCopperAlloy;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.ITileEntityProvider;
@@ -218,7 +218,7 @@ public class BlockFurnaceCopperAlloy extends BlockContainer implements ITileEnti
 
             if (tileentity instanceof TEFurnaceCopperAlloy)
             {
-                ((TEFurnaceCopperAlloy)tileentity).setCustomInventoryName(stack.getDisplayName());
+                //((TEFurnaceCopperAlloy)tileentity).setCustomInventoryName(stack.getDisplayName());
             }
         }
     }
@@ -307,5 +307,4 @@ public class BlockFurnaceCopperAlloy extends BlockContainer implements ITileEnti
     {
         return new BlockStateContainer(this, new IProperty[] {FACING});
     }
-
 }

@@ -17,6 +17,8 @@ public class ModItems {
 
 	public static ModItemsBase ingotTin;
 	public static ModItemsBase ingotCopper;
+	public static ModItemsBase ingotBronze;
+
 	
 	public static ItemAxe copperAxe;
 	public static ItemHoe copperHoe;
@@ -36,6 +38,7 @@ public class ModItems {
 	{
 		ingotTin = register(new ModItemsIngot("ingotTin","ingotTin"));
 		ingotCopper = register(new ModItemsIngot("ingotCopper","ingotCopper"));
+		ingotBronze = register(new ModItemsIngot("ingotBronze","ingotBronze"));
 		
 		copperAxe = register(new ItemAxe(Main.copperToolMaterial, "copperAxe"));
 		copperHoe = register(new ItemHoe(Main.copperToolMaterial, "copperHoe"));

@@ -39,6 +39,8 @@ public class ModRecipes {
 		GameRegistry.addRecipe(new ShapedOreRecipe(ModItems.copperLeggings, "CCC","C C","C C",'C',"ingotCopper"));
 		GameRegistry.addRecipe(new ShapedOreRecipe(ModItems.copperBoots, "C C","C C",'C',"ingotCopper"));
 		
+		
+		
 		//GameRegistry.addRecipe(new ShapedOreRecipe(Items.BUCKET, "I I", " I ", 'I', "ingotCopper"));
 
 	}

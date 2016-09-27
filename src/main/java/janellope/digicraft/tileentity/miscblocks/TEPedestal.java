@@ -1,10 +1,13 @@
 package janellope.digicraft.tileentity.miscblocks;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
@@ -14,6 +17,7 @@ public class TEPedestal extends TileEntity implements IInventory {
 
     private ItemStack[] inventory;
     private String customName;
+    private ItemStack stack;
 
     public TEPedestal() {
         this.inventory = new ItemStack[this.getSizeInventory()];
@@ -113,34 +117,46 @@ public class TEPedestal extends TileEntity implements IInventory {
     }
 
     @Override
-    public void openInventory(EntityPlayer player) {
+    public void openInventory(EntityPlayer player) 
+    {
     }
 
     @Override
-    public void closeInventory(EntityPlayer player) {
+    public void closeInventory(EntityPlayer player) 
+    {
     }
     
     @Override
-    public boolean isItemValidForSlot(int index, ItemStack stack) {
-        return true;
+    public boolean isItemValidForSlot(int index, ItemStack stack) 
+    {
+    	
+    	if (index == 3)
+    		return false;
+    	else
+    		return true;
+    	
     }
     
     @Override
-    public int getField(int id) {
+    public int getField(int id) 
+    {
         return 0;
     }
 
     @Override
-    public void setField(int id, int value) {
+    public void setField(int id, int value)
+    {
     }
 
     @Override
-    public int getFieldCount() {
+    public int getFieldCount()
+    {
         return 0;
     }
     
     @Override
-    public void clear() {
+    public void clear() 
+    {
         for (int i = 0; i < this.getSizeInventory(); i++)
             this.setInventorySlotContents(i, null);
     }
@@ -168,7 +184,6 @@ public class TEPedestal extends TileEntity implements IInventory {
 		return nbt;
     }
 
-
     @Override
     public void readFromNBT(NBTTagCompound nbt) {
         super.readFromNBT(nbt);
@@ -184,11 +199,52 @@ public class TEPedestal extends TileEntity implements IInventory {
             this.setCustomName(nbt.getString("CustomName"));
         }
     }
-
+    
 	@Override
 	public ItemStack removeStackFromSlot(int index) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	public ItemStack getStack() {
+        return stack;
+    }
+	
+	public void setStack(ItemStack stack) 
+	{
+        this.stack = stack;
+        markDirty();
+        if (worldObj != null)
+        {
+            IBlockState state = worldObj.getBlockState(getPos());
+            worldObj.notifyBlockUpdate(getPos(), state, state, 3);
+        }    
+    }
+
+    @Override
+    public NBTTagCompound getUpdateTag() {
+        // getUpdateTag() is called whenever the chunkdata is sent to the
+        // client. In contrast getUpdatePacket() is called when the tile entity
+        // itself wants to sync to the client. In many cases you want to send
+        // over the same information in getUpdateTag() as in getUpdatePacket().
+        return writeToNBT(new NBTTagCompound());
+    }
+
+    @Override
+    public SPacketUpdateTileEntity getUpdatePacket() {
+        // Prepare a packet for syncing our TE to the client. Since we only have to sync the stack
+        // and that's all we have we just write our entire NBT here. If you have a complex
+        // tile entity that doesn't need to have all information on the client you can write
+        // a more optimal NBT here.
+        NBTTagCompound nbtTag = new NBTTagCompound();
+        this.writeToNBT(nbtTag);
+        return new SPacketUpdateTileEntity(getPos(), 1, nbtTag);
+    }
+
+    @Override
+    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity packet) {
+        // Here we get the packet from the server and read it into our client side tile entity
+        this.readFromNBT(packet.getNbtCompound());
+    }
+	
 }

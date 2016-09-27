@@ -2,7 +2,7 @@ package janellope.digicraft.client.gui;
 
 import janellope.digicraft.Main;
 import janellope.digicraft.guicontainer.ContainerFurnaceCopperAlloy;
-import janellope.digicraft.tileentity.furnace.TEFurnaceCopperAlloy;
+import janellope.digicraft.tileentity.furnace.alloy.TEFurnaceCopperAlloy;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.util.ResourceLocation;

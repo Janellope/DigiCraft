@@ -1,7 +1,6 @@
 package janellope.digicraft.block.miscblocks;
 
 import janellope.digicraft.Main;
-import janellope.digicraft.client.render.blocks.PedestalTESR;
 import janellope.digicraft.item.ItemModelProvider;
 import janellope.digicraft.network.ModGuiHandler;
 import janellope.digicraft.tileentity.miscblocks.TEPedestal;
@@ -21,7 +20,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -39,8 +37,6 @@ public class BlockPedestal extends Block implements ITileEntityProvider, ItemMod
     public void registerItemModel(Item block) 
 	{
 		Main.proxy.registerItemRenderer(block, 0, "pedestalblock");
-
-		ClientRegistry.bindTileEntitySpecialRenderer(TEPedestal.class, new PedestalTESR());
 	}
     
     @Override
@@ -82,6 +78,7 @@ public class BlockPedestal extends Block implements ITileEntityProvider, ItemMod
 	                    // There is no item in the pedestal and the player is holding an item. We move that item
 	                    // to the pedestal
 	                    te.setInventorySlotContents(0,player.getHeldItem(hand));
+	                    te.setStack(player.getHeldItem(hand));
 	                    player.inventory.setInventorySlotContents(player.inventory.currentItem, null);
 	                    // Make sure the client knows about the changes in the player inventory
 	                    player.openContainer.detectAndSendChanges();
@@ -92,12 +89,15 @@ public class BlockPedestal extends Block implements ITileEntityProvider, ItemMod
 	                // players inventory if there is room
 	                ItemStack stack = te.getStackInSlot(0);
 	                te.setInventorySlotContents(0,null);
+	                te.setStack(null);
 	                if (!player.inventory.addItemStackToInventory(stack) ) {
 	                    // Not possible. Throw item in the world
 	                    EntityItem entityItem = new EntityItem(world, pos.getX(), pos.getY()+1, pos.getZ(), stack);
 	                    world.spawnEntityInWorld(entityItem);
-	                } else {
-	                    player.openContainer.detectAndSendChanges();
+	                } 
+	                else 
+	                {
+	                    player.openContainer.detectAndSendChanges();	                    
 	                }
 	            }
 				return true;

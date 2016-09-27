@@ -81,8 +81,6 @@ public class ModBlocks {
 		cropCorn = register(new BlockCropCorn(), null);
 		
 		pedestalblock = register(new BlockPedestal("pedestalblock"));
-
-
 		
 	}
 

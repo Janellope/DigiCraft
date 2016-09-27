@@ -1,6 +1,6 @@
 package janellope.digicraft.guicontainer;
 
-import janellope.digicraft.tileentity.furnace.TEFurnaceCopperAlloy;
+import janellope.digicraft.tileentity.furnace.alloy.TEFurnaceCopperAlloy;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
@@ -111,12 +111,4 @@ public class ContainerFurnaceCopperAlloy extends Container {
 
         return itemstack;
     }
-	
-	//public void addCraftingToCrafters (ICrafting icrafting) 
-	//{
-	//	super.addcrafttingtocrafters(icrafting)
-	//	crafting.sendprogressbarupdate(this, 0, this.TEFurnaceCopperAlloy.dualCookTime);
-		
-	//}
-
 }
